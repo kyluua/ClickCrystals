@@ -8,10 +8,9 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-    maven { url "https://maven.terraformersmc.com/releases/" }
     maven {
-        name = "Terraformers"
-        url = "https://maven.terraformersmc.com/"
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
     }
     mavenCentral()
     // Add repositories to retrieve artifacts from in here.
@@ -28,7 +27,7 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // clickcrystals could still run without ModMenu
-    implementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+    implementation "maven.modrinth:modmenu:${project.modmenu_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
