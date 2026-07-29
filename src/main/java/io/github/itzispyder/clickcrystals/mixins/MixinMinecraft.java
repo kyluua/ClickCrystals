@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft implements Global {
 
-    @Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "setScreenAndShow", at = @At("HEAD"), cancellable = true)
     public void set(Screen screen, CallbackInfo ci) {
         SetScreenEvent event = new SetScreenEvent(screen);
         system.eventBus.pass(event);
@@ -29,7 +29,7 @@ public abstract class MixinMinecraft implements Global {
         if (event.isCancelled()) {
             ci.cancel();
             AccessorMinecraftClient mc = (AccessorMinecraftClient) this;
-            mc.invokeSetScreen(null);
+            mc.invokeSetScreenAndShow(null);
         }
     }
 
@@ -40,7 +40,7 @@ public abstract class MixinMinecraft implements Global {
         system.eventBus.passWithCallbackInfo(cir, evt);
     }
 
-    @Inject(method = "destroy", at = @At("HEAD"))
+    @Inject(method = "close", at = @At("HEAD"))
     public void stop(CallbackInfo ci) {
         system.onClientStopping();
     }

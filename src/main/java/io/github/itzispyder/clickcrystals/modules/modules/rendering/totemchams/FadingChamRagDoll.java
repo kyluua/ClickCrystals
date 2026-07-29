@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams;
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts.ChamPart;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts.FadingChamPart;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.world.entity.player.Player;
 
 public class FadingChamRagDoll extends ChamRagDoll<FadingChamPart> {
@@ -33,7 +34,7 @@ public class FadingChamRagDoll extends ChamRagDoll<FadingChamPart> {
     }
 
     @Override
-    protected void renderPart(FadingChamPart part, PoseStack matrices, int color, float tickDelta) {
-        part.render(matrices, color, tickDelta, age);
+    protected void renderPart(FadingChamPart part, PoseStack matrices, SubmitNodeCollector submitNodeCollector, int color, float tickDelta) {
+        part.render(matrices, submitNodeCollector, color, tickDelta, age);
     }
 }

@@ -2,7 +2,6 @@ package io.github.itzispyder.clickcrystals.modules.modules.rendering.trajectorie
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.events.events.world.RenderWorldEvent;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.MissHitResult;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
@@ -10,6 +9,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils3d;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -108,12 +108,11 @@ public class ProjectilePath implements Global {
     public record Result(HitResult hit, List<Vec3> vertices) {
         public static final Result MISS = new Result(MissHitResult.MISS, new ArrayList<>());
 
-        public void draw(RenderWorldEvent e, float tickDelta) {
+        public void draw(PoseStack matrices, SubmitNodeCollector submitNodeCollector, Vec3 cameraPosition, float tickDelta) {
             if (vertices.size() <= 1)
                 return;
 
             LocalPlayer p = PlayerUtils.player();
-            PoseStack matrices = e.getMatrices();
             Vec3 playerPos = MathUtils.lerpEntityPosVec(p, tickDelta);
             Vec3 playerEye = MathUtils.lerpEntityEyeVec(p, tickDelta);
             Vec3 offset = playerPos.subtract(p.xOld, p.yOld, p.zOld);
@@ -131,28 +130,28 @@ public class ProjectilePath implements Global {
                 for (int i = 0; i < vertices.size() - 1; i++) {
                     boolean player = (int)vertices.get(i).y == (int)p.getY();
                     boolean hitEnt = hit.getType() == HitResult.Type.ENTITY;
-                    Vec3 v1 = e.getOffsetPos(vertices.get(i).add(offset));
-                    Vec3 v2 = e.getOffsetPos(vertices.get(i + 1).add(offset));
-                    RenderUtils3d.drawFlatLine(matrices, v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, 0.05, player || hitEnt ? 0xFFFF4040 : 0xFFFFFFFF);
+                    Vec3 v1 = vertices.get(i).add(offset).subtract(cameraPosition);
+                    Vec3 v2 = vertices.get(i + 1).add(offset).subtract(cameraPosition);
+                    RenderUtils3d.drawFlatLine(matrices, submitNodeCollector, v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, 0.05, player || hitEnt ? 0xFFFF4040 : 0xFFFFFFFF);
                 }
             }
 
             if (hit.getType() == HitResult.Type.MISS)
                 return;
             else if (hit instanceof BlockHitResult block)
-                RenderUtils3d.renderBlock(matrices, e.getOffsetPos(block.getBlockPos()), 0x40FFFFFF);
+                RenderUtils3d.renderBlock(matrices, submitNodeCollector, Vec3.atLowerCornerOf(block.getBlockPos()).subtract(cameraPosition), 0x40FFFFFF);
             else if (hit instanceof EntityHitResult eHit && eHit.getEntity() instanceof LivingEntity liv && liv != p) {
-                AABB box = liv.getBoundingBox().move(e.getCamera().position().reverse());
-                RenderUtils3d.fillBox(matrices, box, 0x40FF4040);
+                AABB box = liv.getBoundingBox().move(cameraPosition.reverse());
+                RenderUtils3d.fillBox(matrices, submitNodeCollector, box, 0x40FF4040);
             }
 
             if (last.distanceTo(p.getEyePosition()) > 3.0) {
-//                Vec3d from = e.getOffsetPos(playerPos);
-                Vec3 to = e.getOffsetPos(last.add(offset));
+//                Vec3 from = playerPos.subtract(cameraPosition);
+                Vec3 to = last.add(offset).subtract(cameraPosition);
                 double w = 0.125;
                 AABB box = new AABB(to.add(-w, -w, -w), to.add(w, w, w));
-                RenderUtils3d.fillBox(matrices, box, 0x80FF4040);
-//                RenderUtils3d.drawLine(matrices, to.x, to.y, to.z, from.x, from.y, from.z, 0xFFFF4040);
+                RenderUtils3d.fillBox(matrices, submitNodeCollector, box, 0x80FF4040);
+//                RenderUtils3d.drawLine(matrices, submitNodeCollector, to.x, to.y, to.z, from.x, from.y, from.z, 0xFFFF4040);
             }
         }
     }

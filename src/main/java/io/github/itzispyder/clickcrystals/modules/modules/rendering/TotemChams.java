@@ -124,15 +124,16 @@ public class TotemChams extends ListenerModule {
     }
 
     @EventHandler
-    private void onRenderWorld(RenderWorldEvent e) {
+    private void onRenderWorld(RenderWorldEvent event) {
         if (PlayerUtils.invalid())
             return;
 
-        PoseStack matrices = e.getMatrices();
-        float tickDelta = e.getTickCounter().getGameTimeDeltaPartialTick(true);
+        PoseStack matrices = event.getPoseStack();
+        var submitNodeCollector = event.getSubmitNodeCollector();
+        float tickDelta = event.getDeltaTracker().getGameTimeDeltaPartialTick(true);
 
         for (ChamRagDoll<?> doll : ragDolls)
-            doll.render(matrices, getColor(), tickDelta);
+            doll.render(matrices, submitNodeCollector, getColor(), tickDelta);
     }
 
     public int getColor() {

@@ -1,8 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering;
 
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.world.RenderWorldEvent;
 import io.github.itzispyder.clickcrystals.gui.misc.Color;
@@ -13,11 +11,10 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderLayers;
-import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
@@ -36,51 +33,46 @@ public class ElytraShadow extends ListenerModule {
     }
 
     @EventHandler
-    public void onWorldRender(RenderWorldEvent e) {
+    public void onWorldRender(RenderWorldEvent event) {
         Color color = this.color.getVal();
+        PoseStack matrices = event.getPoseStack();
+        SubmitNodeCollector submitNodeCollector = event.getSubmitNodeCollector();
+        Vec3 cameraPosition = event.getCamera().position();
+        float tickDelta = event.getDeltaTracker().getGameTimeDeltaPartialTick(true);
+
         for (AbstractClientPlayer player : PlayerUtils.getClientWorld().players())
             if (player.isFallFlying())
-                renderPlayerShadow(e, player, color);
+                renderPlayerShadow(matrices, submitNodeCollector, cameraPosition, MathUtils.lerpEntityPosVec(player, tickDelta), color);
     }
 
-    private void renderPlayerShadow(RenderWorldEvent e, Player ent, Color color) {
-        Vec3 pos = MathUtils.lerpEntityPosVec(ent, e.getTickCounter().getGameTimeDeltaPartialTick(true));
-        Vec3 pnt1, pnt2, pnt3, pnt4;
+    private void renderPlayerShadow(PoseStack matrices, SubmitNodeCollector submitNodeCollector, Vec3 cameraPosition, Vec3 playerPosition, Color color) {
+        submitNodeCollector.submitCustomGeometry(matrices, RenderLayers.QUADS, (pose, buf) -> {
+            Matrix4f mat = pose.pose();
+            float rad = 1F;
+            float dTheta = Mth.PI / 16; // i chose this because mc pixels are 1/16 of a block, if ur computer lags womp womp
+            float dRad = rad / 16;
 
-        Matrix4f mat = e.getMatrices().last().pose();
-        BufferBuilder buf = RenderUtils.getBuffer(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+            for (float i = 0; i < Mth.TWO_PI; i += dTheta) {
+                for (float r = dRad; r <= rad; r += dRad) {
+                    Vec3 pnt1 = castShadowVertex(playerPosition.add(r * Mth.cos(i), 0, r * Mth.sin(i)));
+                    Vec3 pnt2 = castShadowVertex(playerPosition.add((r + dRad) * Mth.cos(i), 0, (r + dRad) * Mth.sin(i)));
+                    Vec3 pnt3 = castShadowVertex(playerPosition.add((r + dRad) * Mth.cos(i + dTheta), 0, (r + dRad) * Mth.sin(i + dTheta)));
+                    Vec3 pnt4 = castShadowVertex(playerPosition.add(r * Mth.cos(i + dTheta), 0, r * Mth.sin(i + dTheta)));
 
-        float rad = 1F;
-        float dTheta = Mth.PI / 16; // i chose this because mc pixels are 1/16 of a block, if ur computer lags womp womp
-        float dRad = rad / 16;
-        for (float i = 0; i < Mth.TWO_PI; i += dTheta) {
-            for (float r = dRad; r <= rad; r += dRad) {
-                pnt1 = pos.add(r * Mth.cos(i), 0, r * Mth.sin(i));
-                pnt1 = castShadowVertex(pnt1);
+                    if (pnt1 == null || pnt2 == null || pnt3 == null || pnt4 == null)
+                        continue;
 
-                pnt2 = pos.add((r + dRad) * Mth.cos(i), 0, (r + dRad) * Mth.sin(i));
-                pnt2 = castShadowVertex(pnt2);
-
-                pnt3 = pos.add((r + dRad) * Mth.cos(i + dTheta), 0, (r + dRad) * Mth.sin(i + dTheta));
-                pnt3 = castShadowVertex(pnt3);
-
-                pnt4 = pos.add(r * Mth.cos(i + dTheta), 0, r * Mth.sin(i + dTheta));
-                pnt4 = castShadowVertex(pnt4);
-
-                if (pnt1 == null || pnt2 == null || pnt3 == null || pnt4 == null)
-                    continue;
-
-                pnt1 = e.getOffsetPos(pnt1);
-                pnt2 = e.getOffsetPos(pnt2);
-                pnt3 = e.getOffsetPos(pnt3);
-                pnt4 = e.getOffsetPos(pnt4);
-                buf.addVertex(mat, (float) pnt1.x, (float) pnt1.y, (float) pnt1.z).setColor(color.getHexCustomAlpha(r / rad));
-                buf.addVertex(mat, (float) pnt2.x, (float) pnt2.y, (float) pnt2.z).setColor(color.getHexCustomAlpha((r + dRad) / rad));
-                buf.addVertex(mat, (float) pnt3.x, (float) pnt3.y, (float) pnt3.z).setColor(color.getHexCustomAlpha((r + dRad) / rad));
-                buf.addVertex(mat, (float) pnt4.x, (float) pnt4.y, (float) pnt4.z).setColor(color.getHexCustomAlpha(r / rad));
+                    pnt1 = pnt1.subtract(cameraPosition);
+                    pnt2 = pnt2.subtract(cameraPosition);
+                    pnt3 = pnt3.subtract(cameraPosition);
+                    pnt4 = pnt4.subtract(cameraPosition);
+                    buf.addVertex(mat, (float) pnt1.x, (float) pnt1.y, (float) pnt1.z).setColor(color.getHexCustomAlpha(r / rad));
+                    buf.addVertex(mat, (float) pnt2.x, (float) pnt2.y, (float) pnt2.z).setColor(color.getHexCustomAlpha((r + dRad) / rad));
+                    buf.addVertex(mat, (float) pnt3.x, (float) pnt3.y, (float) pnt3.z).setColor(color.getHexCustomAlpha((r + dRad) / rad));
+                    buf.addVertex(mat, (float) pnt4.x, (float) pnt4.y, (float) pnt4.z).setColor(color.getHexCustomAlpha(r / rad));
+                }
             }
-        }
-        RenderUtils.drawBuffer(buf, RenderLayers.QUADS);
+        });
     }
 
     private Vec3 castShadowVertex(Vec3 pnt) {

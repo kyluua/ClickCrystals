@@ -129,10 +129,10 @@ public class Trajectories extends ListenerModule {
     }
 
     @EventHandler
-    public void onRenderWorld(RenderWorldEvent e) {
-        tickDelta = e.getTickCounter().getGameTimeDeltaPartialTick(true);
+    public void onRenderWorld(RenderWorldEvent event) {
+        tickDelta = event.getDeltaTracker().getGameTimeDeltaPartialTick(true);
         if (currentResult != null)
-            currentResult.draw(e, tickDelta);
+            currentResult.draw(event.getPoseStack(), event.getSubmitNodeCollector(), event.getCamera().position(), tickDelta);
     }
 
     public float getTickDelta() {

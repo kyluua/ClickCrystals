@@ -1,15 +1,10 @@
 package io.github.itzispyder.clickcrystals.util.minecraft.render;
 
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.states.*;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.feature.CustomFeatureRenderer;
-import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -239,16 +234,6 @@ public final class RenderUtils implements Global {
 
     public static void drawItem(GuiGraphicsExtractor context, ItemStack item, int x, int y) {
         drawItem(context, item, x, y, 1.0F);
-    }
-
-    // util
-    public static void drawBuffer(BufferBuilder buf, RenderType layer) {
-        layer.draw(buf.buildOrThrow());
-    }
-
-    public static BufferBuilder getBuffer(VertexFormat.Mode drawMode, VertexFormat format) {
-        CustomFeatureRenderer renderer = new CustomFeatureRenderer();
-        return Tesselator.getInstance().begin(drawMode, format);
     }
 
     public static int width() {
