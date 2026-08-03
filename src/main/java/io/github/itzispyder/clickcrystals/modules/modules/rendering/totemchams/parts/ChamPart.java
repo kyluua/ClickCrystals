@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 
 public abstract class ChamPart {
 
@@ -26,5 +27,5 @@ public abstract class ChamPart {
 
     public abstract void tick(float gravity, float ageDelta);
 
-    public abstract void render(PoseStack matrices, int color, float tickDelta, int age);
+    public abstract void render(PoseStack matrices, SubmitNodeCollector submitNodeCollector, int color, float tickDelta, int age);
 }

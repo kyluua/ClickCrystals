@@ -13,8 +13,8 @@ public interface AccessorMinecraftClient {
     @Accessor("crosshairPickEntity")
     Entity accessTargetedEntity();
 
-    @Invoker("setScreen")
-    void invokeSetScreen(Screen screen);
+    @Invoker("setScreenAndShow")
+    void invokeSetScreenAndShow(Screen screen);
 
     @Invoker("startAttack")
     @SuppressWarnings("all")

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts.ChamPart;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts.ExplodingChamPart;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.world.entity.player.Player;
 
 public class ExplodingChamRagDoll extends ChamRagDoll<ExplodingChamPart> {
@@ -45,8 +46,8 @@ public class ExplodingChamRagDoll extends ChamRagDoll<ExplodingChamPart> {
     }
 
     @Override
-    protected void renderPart(ExplodingChamPart part, PoseStack matrices, int color, float tickDelta) {
-        part.render(matrices, color, tickDelta, age);
+    protected void renderPart(ExplodingChamPart part, PoseStack matrices, SubmitNodeCollector submitNodeCollector, int color, float tickDelta) {
+        part.render(matrices, submitNodeCollector, color, tickDelta, age);
     }
 
     private int randomSign() {

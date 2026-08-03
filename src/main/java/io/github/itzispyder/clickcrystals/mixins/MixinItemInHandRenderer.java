@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(ItemInHandRenderer.class)
 public abstract class MixinItemInHandRenderer implements Global {
 
-    @Inject(method = "renderArmWithItem", at = @At("HEAD"))
+    @Inject(method = "submitArmWithItem", at = @At("HEAD"))
     public void renderFirstPersonItemInvoke(AbstractClientPlayer player, float tickProgress, float pitch, InteractionHand hand, float swingProgress, ItemStack item, float equipProgress, PoseStack matrices, SubmitNodeCollector orderedRenderCommandQueue, int light, CallbackInfo ci) {
         ViewModel vm = Module.get(ViewModel.class);
         if (!vm.isEnabled())
@@ -57,14 +57,14 @@ public abstract class MixinItemInHandRenderer implements Global {
         }
     }
 
-    @Inject(method = "renderArmWithItem", at = @At("TAIL"))
+    @Inject(method = "submitArmWithItem", at = @At("TAIL"))
     public void renderFirstPersonItemTail(AbstractClientPlayer player, float tickProgress, float pitch, InteractionHand hand, float swingProgress, ItemStack item, float equipProgress, PoseStack matrices, SubmitNodeCollector orderedRenderCommandQueue, int light, CallbackInfo ci) {
         if (Module.isEnabled(ViewModel.class))
             matrices.popPose();
     }
 
     @ModifyArgs(
-            method = "renderArmWithItem(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;I)V",
+            method = "submitArmWithItem(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;I)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemInHandRenderer;applyItemArmTransform(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/entity/HumanoidArm;F)V")
     )
     public void onApplyItemArmTransform(Args args) {

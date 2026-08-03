@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.HealthAsBar;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoOverlay;
@@ -9,8 +8,8 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoScoreboard
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -22,8 +21,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-@Mixin(Gui.class)
-public abstract class MixinGui implements Global {
+@Mixin(Hud.class)
+public abstract class MixinHud implements Global {
 
     @ModifyArgs(method = "extractArmor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
     private static void renderArmor(Args args) {
@@ -72,7 +71,7 @@ public abstract class MixinGui implements Global {
     public void renderHuds(GuiGraphicsExtractor context, DeltaTracker tickCounter, CallbackInfo ci) {
         if (PlayerUtils.invalid()) return;
 
-        for (Hud hud : system.huds().values())
+        for (var hud : system.huds().values())
             if (hud.canRender()) hud.render(context, tickCounter.getGameTimeDeltaPartialTick(true));
     }
 }

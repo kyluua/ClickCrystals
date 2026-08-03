@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams;
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts.ChamPart;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -39,9 +40,9 @@ public abstract class ChamRagDoll<P extends ChamPart> implements Global {
 
     public abstract void tick(float gravity, float maxVelocity);
 
-    protected abstract void renderPart(P part, PoseStack matrices, int color, float tickDelta);
+    protected abstract void renderPart(P part, PoseStack matrices, SubmitNodeCollector submitNodeCollector, int color, float tickDelta);
 
-    public void render(PoseStack matrices, int color, float tickDelta) {
+    public void render(PoseStack matrices, SubmitNodeCollector submitNodeCollector, int color, float tickDelta) {
         Vector3f c = new Vec3(x, y, z).subtract(mc.gameRenderer.mainCamera().position()).toVector3f();
         Quaternionf pitch = new Quaternionf().rotationX((float) Math.toRadians(glidingProgress == 1 ? this.pitch + 90 : glidingProgress * 90));
         Quaternionf yaw = new Quaternionf().rotationY((float) Math.toRadians(-this.yaw));
@@ -55,7 +56,7 @@ public abstract class ChamRagDoll<P extends ChamPart> implements Global {
         color = (alpha << 24) | (color & 0x00FFFFFF);
 
         for (P part : parts.values())
-            renderPart(part, matrices, color, tickDelta);
+            renderPart(part, matrices, submitNodeCollector, color, tickDelta);
 
         matrices.popPose();
     }

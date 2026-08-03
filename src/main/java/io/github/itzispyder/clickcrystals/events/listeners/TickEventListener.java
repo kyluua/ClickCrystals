@@ -33,7 +33,7 @@ public class TickEventListener implements Listener, Global {
     }
 
     @EventHandler
-    public void onRenderTick(RenderWorldEvent e) {
+    public void onRenderTick(RenderWorldEvent event) {
         system.cameraRotator.onRenderTick();
     }
 

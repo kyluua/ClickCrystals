@@ -204,13 +204,15 @@ public class Tunnel3x3 extends ListenerModule {
     }
 
     @EventHandler
-    public void render(RenderWorldEvent e) {
+    public void render(RenderWorldEvent event) {
         if (!renderBlocks.getVal())
             return;
 
+        var matrices = event.getPoseStack();
+        var submitNodeCollector = event.getSubmitNodeCollector();
         for (int i = targets.size() - 1; i >= index + 1; i--)
-            RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3.atLowerCornerOf(targets.get(i))), 0x05FFFFFF);
-        RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3.atLowerCornerOf(targets.get(index))), 0x05FF2020);
+            RenderUtils3d.renderBlock(matrices, submitNodeCollector, event.getCameraRelativePosition(Vec3.atLowerCornerOf(targets.get(i))), 0x05FFFFFF);
+        RenderUtils3d.renderBlock(matrices, submitNodeCollector, event.getCameraRelativePosition(Vec3.atLowerCornerOf(targets.get(index))), 0x05FF2020);
     }
 
     @EventHandler

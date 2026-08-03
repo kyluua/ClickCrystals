@@ -42,16 +42,17 @@ public class ItemHighlight extends ListenerModule {
     );
 
     @EventHandler
-    public void onRenderWorld(RenderWorldEvent e) {
+    public void onRenderWorld(RenderWorldEvent event) {
         if (!renderType.getVal().renderWorld() || !isEnabled())
             return;
 
-        PoseStack matrices = e.getMatrices();
-        float tickDelta = e.getTickCounter().getGameTimeDeltaPartialTick(true);
+        PoseStack matrices = event.getPoseStack();
+        var submitNodeCollector = event.getSubmitNodeCollector();
+        float tickDelta = event.getDeltaTracker().getGameTimeDeltaPartialTick(true);
 
         for (ItemEntity itemEntity : getItemEntities()) {
             ItemStack item = itemEntity.getItem();
-            Vec3 pos = e.getOffsetPos(MathUtils.lerpEntityPosVec(itemEntity, tickDelta));
+            Vec3 pos = event.getCameraRelativePosition(MathUtils.lerpEntityPosVec(itemEntity, tickDelta));
             Rarity rarity = item.getRarity();
 
             if (rarity.ordinal() < rarityFilter.getVal().ordinal())
@@ -59,7 +60,7 @@ public class ItemHighlight extends ListenerModule {
 
             int color = getRarityColor(rarity);
             int fadeColor = 0x00FFFFFF & color;
-            RenderUtils3d.fillCylGradient(matrices, pos.x, pos.y, pos.z, 0.2, 0.25, color, fadeColor);
+            RenderUtils3d.fillCylGradient(matrices, submitNodeCollector, pos.x, pos.y, pos.z, 0.2, 0.25, color, fadeColor);
         }
     }
 

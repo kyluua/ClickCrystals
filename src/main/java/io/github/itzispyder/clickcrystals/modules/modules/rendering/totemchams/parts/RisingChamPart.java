@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils3d;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import org.joml.Quaternionf;
 
 // Soul-like rise: the part drifts upward while gently swaying and slowly spinning.
@@ -48,7 +49,7 @@ public class RisingChamPart extends ChamPart {
     }
 
     @Override
-    public void render(PoseStack matrices, int color, float tickDelta, int age) {
+    public void render(PoseStack matrices, SubmitNodeCollector submitNodeCollector, int color, float tickDelta, int age) {
         float x = (float) MathUtils.lerp(prevX, this.x, tickDelta);
         float y = (float) MathUtils.lerp(prevY, this.y, tickDelta);
         float z = (float) MathUtils.lerp(prevZ, this.z, tickDelta);
@@ -61,11 +62,11 @@ public class RisingChamPart extends ChamPart {
         matrices.rotateAround(getRotation(tickDelta), cx, cy, cz);
         matrices.translate(x, y, z);
 
-        RenderUtils3d.fillRectPrism(matrices, minX, minY, minZ, maxX, maxY, maxZ, color, true);
+        RenderUtils3d.fillRectPrism(matrices, submitNodeCollector, minX, minY, minZ, maxX, maxY, maxZ, color, true);
 
         int alpha = Math.min((color >> 24 & 0xFF) * 5, 0xFF);
         int outline = (alpha << 24) | (color & 0x00FFFFFF);
-        RenderUtils3d.drawRectPrism(matrices, minX, minY, minZ, maxX, maxY, maxZ, outline, true);
+        RenderUtils3d.drawRectPrism(matrices, submitNodeCollector, minX, minY, minZ, maxX, maxY, maxZ, outline, true);
 
         matrices.popPose();
     }
