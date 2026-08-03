@@ -1,11 +1,11 @@
 package io.github.itzispyder.clickcrystals.scripting.syntax.macros;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.modules.modules.misc.TeamDetector;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.syntax.InputType;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
-import io.github.itzispyder.clickcrystals.modules.modules.misc.TeamDetector;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.EntityHitResult;

@@ -1,12 +1,12 @@
 package io.github.itzispyder.clickcrystals.scripting.syntax.macros.camera;
 
+import io.github.itzispyder.clickcrystals.modules.modules.misc.TeamDetector;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgsReader;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.syntax.TargetType;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
-import io.github.itzispyder.clickcrystals.modules.modules.misc.TeamDetector;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PolarParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
