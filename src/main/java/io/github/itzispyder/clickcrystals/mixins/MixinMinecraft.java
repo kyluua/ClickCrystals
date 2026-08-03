@@ -3,7 +3,6 @@ package io.github.itzispyder.clickcrystals.mixins;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
-import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SelfGlow;
@@ -20,18 +19,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft implements Global {
-
-    @Inject(method = "setScreenAndShow", at = @At("HEAD"), cancellable = true)
-    public void set(Screen screen, CallbackInfo ci) {
-        SetScreenEvent event = new SetScreenEvent(screen);
-        system.eventBus.pass(event);
-
-        if (event.isCancelled()) {
-            ci.cancel();
-            AccessorMinecraftClient mc = (AccessorMinecraftClient) this;
-            mc.invokeSetScreenAndShow(null);
-        }
-    }
 
     @Inject(method = "startAttack", at = @At("HEAD") ,cancellable = true)
     private void attack(CallbackInfoReturnable<Boolean> cir) {

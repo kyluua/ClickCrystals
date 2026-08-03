@@ -17,6 +17,7 @@
     "MixinConnection",
     "MixinEntityRenderer",
     "MixinGameRenderer",
+    "MixinGui",
     "MixinHud",
     "MixinHumanoidArmorLayer",
     "MixinItemInHandRenderer",
