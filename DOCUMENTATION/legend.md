@@ -37,6 +37,7 @@ Here are some examples of command lines:
 - [Cancel Packet (cancel_packet)](./commands/cancel_packet.md)
 - [Chat (chat)](./commands/chat.md)
 - [Config (config)](./commands/config.md)
+- [Craft (craft)](./commands/craft.md)
 - [Damage (damage)](./commands/damage.md)
 - [Def (def)](./commands/def.md)
 - [Define (define)](./commands/define.md)

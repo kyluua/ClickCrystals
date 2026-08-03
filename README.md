@@ -58,37 +58,19 @@ Take a look in latest releases for [experimental versions](https://github.com/it
 
 ## Newest Changes
 ```yml
-Version: 1.4.0
+Version: 1.4.1
 
 Scripting:
-- fix cancel_packet not working
-- fix uncancel_packet not working
-- fix on packet_send not working
-- fix on packet_receive not working
-- fix on place_block running twice
-- fix on break_block running twice
-- notify not working
-- if rot_x <comparator> <num> # pitch
-- if rot_y <comparator> <num> # yaw
-- if facing <direction>
-- if input_active container
-- if input_active inventory # now strictly only works for inventories
+  - if target_block_face <direction>
+  - toggle_input <input> <boolean>
 
-Patches:
-- PacketMapper ID not working in scripts
-- new entity textures not showing up
-- script notify command
-- Zoom module not working
-- custom splash text color
-- GuiCursor not working on Wayland
-- fix NoOverlay fire overlay doesnt get removed
-- add color setting instead of RGB
+User Interface:
+  - made InGameHuds message clickable # i-no-am
+  - made scripting editor operate much like VSCode # i-no-am
 
-Codebase:
-- renamed mixin classes to fit mojmap conventions
-
-Module:
-- add ElytraShadow
+Modules:
+  - improved GuiCursor
+  - added directional shield toggle for AxeSwap
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
@@ -153,7 +135,7 @@ Module:
 |   NoInteractions   |                           Prevents opening certain containers(e-chests,chests,etc)                            |
 |    NoScrolling     |                                           Disable hotbar scrolling                                            |
 |    SoundOnDeath    |                                      Plays a sound upon killing a player                                      |
-|    TeamDetector    |                               Finding teams and disable attacking your own team                               |
+|    TeamDetector    |                      Detect team alignments and prevent friendly fire against teammates                       |
 |    ToolSwitcher    |                                 Switches to the right tool for mining a block                                 |
 |     TotemPops      |                                 Send messages when a player pops their totem                                  |
 |     Tunnel3x3      |                               Enable to tunnel a 3x3x5 tunnel in your direction                               |

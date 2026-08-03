@@ -239,10 +239,10 @@ public class Conditionals implements Global {
     // @Format (while|while_not) <num>? dimension (overworld|the_nether|the_end) {}
     public static final Conditional DIMENSION;
     // @Format (if|if_not) effect_amplifier <identifier> <comparator> <int> {}
-    // @Format (while|while_not) <num>? effect_amplifier<identifier> <comparator> <int> {}
+    // @Format (while|while_not) <num>? effect_amplifier <identifier> <comparator> <int> {}
     public static final Conditional EFFECT_AMPLIFIER;
     // @Format (if|if_not) effect_duration <identifier> <comparator> <int> {}
-    // @Format (while|while_not) <num>? effect_duration<identifier> <comparator> <int> {}
+    // @Format (while|while_not) <num>? effect_duration <identifier> <comparator> <int> {}
     public static final Conditional EFFECT_DURATION;
     // @Format (if|if_not) in_game {}
     // @Format (while|while_not) <num>? in_game {}

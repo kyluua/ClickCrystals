@@ -600,11 +600,6 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(-?\\d+)",
-          "optional": false,
-          "leading": false
-        },
-        {
           "acceptingRegex": "",
           "optional": false,
           "leading": false
@@ -637,11 +632,6 @@
         },
         {
           "acceptingRegex": "([\u003c\u003e\u003d!]\u003d)|[\u003c\u003e\u003d]",
-          "optional": false,
-          "leading": false
-        },
-        {
-          "acceptingRegex": "(-?\\d+)",
           "optional": false,
           "leading": false
         },
@@ -2348,6 +2338,11 @@
           "leading": false
         },
         {
+          "acceptingRegex": "(effect_amplifier)",
+          "optional": false,
+          "leading": false
+        },
+        {
           "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
           "optional": false,
           "leading": false
@@ -2417,6 +2412,11 @@
         {
           "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
           "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(effect_duration)",
+          "optional": false,
           "leading": false
         },
         {
@@ -7205,6 +7205,32 @@
         {
           "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(craft)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
           "leading": false
         }
       ],
