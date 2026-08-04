@@ -33,9 +33,10 @@ Happy coding and cpvping!
 | What You Have | What to get                                                                                                                 |
 |:--------------|:----------------------------------------------------------------------------------------------------------------------------|
 | higher..      | how is that even possible?                                                                                                  |
-| 26.1.2        | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0) *recommended |
-| 26.1.1        | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0) *recommended |
-| 26.1          | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0) *recommended |
+| 26.2          | [ClickCrystals-26.2-1.4.1.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.1) *recommended |
+| 26.1.2        | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0)              |
+| 26.1.1        | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0)              |
+| 26.1          | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0)              |
 | 1.21.11       | [ClickCrystals-1.21.11-1.3.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.9)           |
 | 1.21.10       | [ClickCrystals-1.21.9-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7)            |
 | 1.21.9        | [ClickCrystals-1.21.9-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7)            |
@@ -48,8 +49,7 @@ Happy coding and cpvping!
 | 1.21.2        | not supported                                                                                                               |
 | 1.21.1        | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
 | 1.21          | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
-| ..lower       | cry                                                                                                                         |
-
+| ..lower       | cry                                                                                                                         | 
 
 ### Can't Find The Version You're Looking For?
 There's still a chance for you to access latest script syntax!
@@ -60,17 +60,31 @@ Take a look in latest releases for [experimental versions](https://github.com/it
 ```yml
 Version: 1.4.1
 
+Compatibility:
+- updated to Minecraft 26.2
+
 Scripting:
-  - if target_block_face <direction>
-  - toggle_input <input> <boolean>
+- added if target_block_face <direction>
+- added toggle_input <input> <boolean>
+- added craft <item> [delay] [amount] # i-no-am
+- improved scripting autocomplete and syntax highlighting # i-no-am
+- made autocomplete appear only while typing # i-no-am
 
 User Interface:
-  - made InGameHuds message clickable # i-no-am
-  - made scripting editor operate much like VSCode # i-no-am
+- made InGameHuds warning messages clickable # i-no-am
+- made the scripting editor operate much like VSCode # i-no-am
+- added animated conditional visibility for module settings # i-no-am
+- added an option to hide scripting errors from chat # i-no-am
+- fixed custom splash frequency # i-no-am
+- fixed keybind navigation opening the home screen first
 
 Modules:
-  - improved GuiCursor
-  - added directional shield toggle for AxeSwap
+- improved GuiCursor speed and logic # i-no-am
+- made GuiCursor ignore the offhand slot # i-no-am
+- added a directional shield toggle for AxeSwap
+- added Rising and Vortex modes to TotemChams # i-no-am
+- improved TeamDetector manual-player handling # i-no-am
+- fixed NoResPack causing hangs or kicks on forced packs # i-no-am
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
