@@ -56,7 +56,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         this.backButton = new ButtonElement("< Back", baseX + baseWidth - 50 - 10, baseY + 10, 50, 15, (mx, my, self) -> {
             File parent = new File(parentFolder).getParentFile();
             parentFolder = parent.getPath();
-            mc.execute(() -> mc.setScreenAndShow(new ScriptsBrowsingScreen()));
+            mc.execute(() -> mc.gui.setScreen(new ScriptsBrowsingScreen()));
             this.removeChild(self);
         });
         updateButtonDisplay();
@@ -136,7 +136,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
     @Override
     public void resize(int width, int height) {
-        minecraft.setScreenAndShow(new ScriptsBrowsingScreen());
+        minecraft.gui.setScreen(new ScriptsBrowsingScreen());
     }
 
     protected class FolderElement extends ModuleElement {
@@ -229,9 +229,9 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
         @Override
         public void onClick(double mouseX, double mouseY, int button) {
-//            mc.setScreenAndShow(new DownloadScriptScreenOld());
+//            mc.gui.setScreen(new DownloadScriptScreenOld());
             if (button == 0)
-                mc.setScreenAndShow(new DownloadScriptScreen());
+                mc.gui.setScreen(new DownloadScriptScreen());
         }
     }
 
@@ -369,14 +369,14 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
                 String preText = newModule.formatted(moduleId);
                 FileValidationUtils.quickWrite(file, preText);
             }
-            mc.setScreenAndShow(new ClickScriptIDE(file));
+            mc.gui.setScreen(new ClickScriptIDE(file));
         }
 
         public static void createScriptWithPretext(String moduleId, String pretext) {
             File file = new File(parentFolder + File.separator + moduleId + ".ccs");
             if (!file.exists())
                 FileValidationUtils.quickWrite(file, pretext);
-            mc.setScreenAndShow(new ClickScriptIDE(file));
+            mc.gui.setScreen(new ClickScriptIDE(file));
         }
 
         @Override

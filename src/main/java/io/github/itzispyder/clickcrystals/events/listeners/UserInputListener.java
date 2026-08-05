@@ -104,7 +104,7 @@ public class UserInputListener implements Listener {
             base.setPlayOpenAnimation(bl);
             base.setPlayCloseAnimation(bl);
         }
-        mc.execute(() -> mc.setScreenAndShow(screen));
+        mc.execute(() -> mc.gui.setScreen(screen));
     }
 
     @EventHandler
@@ -138,7 +138,7 @@ public class UserInputListener implements Listener {
 
     private void handleScreenManagement(SetScreenEvent e) {
         if (e.getScreen() instanceof BrowsingScreen && PlayerUtils.valid() && config.isOverviewMode()) {
-            mc.setScreenAndShow(new OverviewScreen());
+            mc.gui.setScreen(new OverviewScreen());
             return;
         }
         if (e.getScreen() == null && isScreenTracked(e.getPreviousScreen())) {

@@ -125,6 +125,6 @@ public class ModuleEditScreen extends DefaultBase {
 
     @Override
     public void resize(int width, int height) {
-        minecraft.setScreenAndShow(new ModuleEditScreen(module));
+        minecraft.gui.setScreen(new ModuleEditScreen(module));
     }
 }

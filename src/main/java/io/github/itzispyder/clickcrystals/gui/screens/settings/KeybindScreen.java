@@ -71,7 +71,7 @@ public class KeybindScreen extends DefaultBase {
 
     @Override
     public void resize(int width, int height) {
-        minecraft.setScreenAndShow(new KeybindScreen());
+        minecraft.gui.setScreen(new KeybindScreen());
         ClickCrystals.config.saveKeybinds();
         ClickCrystals.config.save();
     }

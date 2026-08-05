@@ -149,7 +149,7 @@ public class DownloadScriptScreen extends AnimatedBase {
 
     @Override
     public void resize(int width, int height) {
-        minecraft.setScreenAndShow(new DownloadScriptScreen());
+        minecraft.gui.setScreen(new DownloadScriptScreen());
     }
 
     public class FilterButton extends GuiElement {

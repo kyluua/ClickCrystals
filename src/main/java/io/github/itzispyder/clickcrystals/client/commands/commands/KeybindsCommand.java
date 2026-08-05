@@ -15,7 +15,7 @@ public class KeybindsCommand extends Command {
     public void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder) {
         builder.executes(context -> {
             system.scheduler.runDelayedTask(() -> {
-                mc.execute(() -> mc.setScreenAndShow(new KeybindScreen()));
+                mc.execute(() -> mc.gui.setScreen(new KeybindScreen()));
             }, 5 * 50);
             return SINGLE_SUCCESS;
         });

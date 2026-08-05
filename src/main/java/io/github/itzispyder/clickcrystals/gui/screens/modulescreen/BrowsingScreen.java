@@ -30,7 +30,7 @@ public class BrowsingScreen extends DefaultBase {
     protected void init() {
         super.init();
         if (!(this instanceof ScriptsBrowsingScreen) && currentCategory == Categories.SCRIPTED)
-            mc.execute(() -> mc.setScreenAndShow(new ScriptsBrowsingScreen()));
+            mc.execute(() -> mc.gui.setScreen(new ScriptsBrowsingScreen()));
     }
 
     @Override
@@ -64,6 +64,6 @@ public class BrowsingScreen extends DefaultBase {
 
     @Override
     public void resize(int width, int height) {
-        minecraft.setScreenAndShow(new BrowsingScreen());
+        minecraft.gui.setScreen(new BrowsingScreen());
     }
 }

@@ -37,7 +37,7 @@ public class OverviewScreen extends GuiScreen {
             .onPress(button -> {
                 ClickCrystals.config.setOverviewMode(false);
                 ClickCrystals.config.save();
-                mc.setScreenAndShow(new BrowsingScreen());
+                mc.gui.setScreen(new BrowsingScreen());
             })
             .build();
 
@@ -132,6 +132,6 @@ public class OverviewScreen extends GuiScreen {
 
     @Override
     public void resize(int width, int height) {
-        minecraft.setScreenAndShow(new OverviewScreen());
+        minecraft.gui.setScreen(new OverviewScreen());
     }
 }
