@@ -120,7 +120,7 @@ public class SearchResultsElement extends GuiElement {
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
             if (isHovered((int)mouseX, (int)mouseY)) {
-                mc.setScreenAndShow(new ModuleEditScreen(module));
+                mc.gui.setScreen(new ModuleEditScreen(module));
             }
             super.mouseClicked(mouseX, mouseY, button);
         }

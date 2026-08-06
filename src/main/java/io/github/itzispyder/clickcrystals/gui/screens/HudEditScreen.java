@@ -40,7 +40,7 @@ public class HudEditScreen extends GuiScreen {
                     RenderUtils.drawTexture(context,Tex.Icons.SETTINGS, button.x, button.y,button.width, button.height);
                 })
                 .onPress(button -> {
-                    mc.setScreenAndShow(new ModuleEditScreen(Module.get(InGameHuds.class)));
+                    mc.gui.setScreen(new ModuleEditScreen(Module.get(InGameHuds.class)));
                 })
                 .build();
 
@@ -72,7 +72,7 @@ public class HudEditScreen extends GuiScreen {
 
     @Override
     public void resize(int width, int height) {
-        minecraft.setScreenAndShow(new HudEditScreen());
+        minecraft.gui.setScreen(new HudEditScreen());
     }
 
     @Override

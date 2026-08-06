@@ -111,9 +111,9 @@ public final class ClickCrystals implements ModInitializer, Global {
             .condition((bind, screen) -> screen == null)
             .onPress(bind -> {
                 if (Module.isEnabled(InGameHuds.class)) {
-                    mc.setScreenAndShow(new HudEditScreen());
+                    mc.gui.setScreen(new HudEditScreen());
                 } else {
-                    ChatUtils.sendClickableMessage("§c§nThe module §c§nInGameHuds §c§nis not enabled! Press this message to enable it.", () -> mc.setScreenAndShow(new ModuleEditScreen(Module.get(InGameHuds.class))));
+                    ChatUtils.sendClickableMessage("§c§nThe module §c§nInGameHuds §c§nis not enabled! Press this message to enable it.", () -> mc.gui.setScreen(new ModuleEditScreen(Module.get(InGameHuds.class))));
                 }
             })
             .onChange(config::saveKeybind)
@@ -124,7 +124,7 @@ public final class ClickCrystals implements ModInitializer, Global {
             .id("command-prefix")
             .defaultKey(GLFW.GLFW_KEY_COMMA)
             .condition((bind, screen) -> screen == null)
-            .onPress(bind -> mc.setScreenAndShow(new ChatScreen("", false)))
+            .onPress(bind -> mc.gui.setScreen(new ChatScreen("", false)))
             .onChange(config::saveKeybind)
             .build();
 

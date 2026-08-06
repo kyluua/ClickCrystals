@@ -118,6 +118,6 @@ public class SearchScreen extends DefaultBase {
 
     @Override
     public void resize(int width, int height) {
-        minecraft.setScreenAndShow(new SearchScreen());
+        minecraft.gui.setScreen(new SearchScreen());
     }
 }

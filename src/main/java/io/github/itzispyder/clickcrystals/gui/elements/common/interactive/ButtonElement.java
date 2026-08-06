@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public class ButtonElement extends GuiElement {
 
     public static final Function<Supplier<? extends Screen>, ClickAction> OPEN_SCREEN = supplier -> (mx, my, self) -> {
-        mc.execute(() -> mc.setScreenAndShow(supplier.get()));
+        mc.execute(() -> mc.gui.setScreen(supplier.get()));
     };
 
     private ClickAction clickCallback;

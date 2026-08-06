@@ -105,7 +105,7 @@ public class Tunnel3x3 extends ListenerModule {
         if (mc != null && mc.options != null) {
             mc.options.keyAttack.setDown(false);
             if (reopenOnDisable.getVal() && mc.gui.screen() == null) {
-                mc.setScreenAndShow(new ModuleEditScreen(this));
+                mc.gui.setScreen(new ModuleEditScreen(this));
             }
         }
     }

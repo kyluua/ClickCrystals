@@ -113,7 +113,7 @@ public class MouseTaper extends ListenerModule {
             system.cameraRotator.unlockCursor();
 
             if (reopenOnDisable.getVal() && mc.gui.screen() == null) {
-                mc.setScreenAndShow(new ModuleEditScreen(this));
+                mc.gui.setScreen(new ModuleEditScreen(this));
             }
         }
     }

@@ -27,7 +27,7 @@ public class ScriptCommand extends Command {
         builder.executes(cxt -> {
                     system.scheduler.runDelayedTask(() -> {
                         BrowsingScreen.currentCategory = Categories.SCRIPTED;
-                        mc.execute(() -> mc.setScreenAndShow(new BrowsingScreen()));
+                        mc.execute(() -> mc.gui.setScreen(new BrowsingScreen()));
                     }, 5 * 50);
                     return SINGLE_SUCCESS;
                 })

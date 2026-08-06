@@ -49,7 +49,7 @@ public class ProfilesScreen extends DefaultBase {
 
     @Override
     public void resize(int width, int height) {
-        minecraft.setScreenAndShow(new ProfilesScreen());
+        minecraft.gui.setScreen(new ProfilesScreen());
     }
 
     private static class ProfileSelect extends ModuleElement {
@@ -107,7 +107,7 @@ public class ProfilesScreen extends DefaultBase {
             else {
                 while (system.profiles.hasProfile(profileId))
                     system.profiles.deleteProfile(profileId);
-                mc.setScreenAndShow(new ProfilesScreen());
+                mc.gui.setScreen(new ProfilesScreen());
             }
             super.mouseClicked(mouseX, mouseY, button);
         }
@@ -135,7 +135,7 @@ public class ProfilesScreen extends DefaultBase {
                             .replace(' ', '-')
                             .replaceAll("[^a-z_-]", "");
                     system.profiles.switchProfile(name);
-                    mc.setScreenAndShow(new ProfilesScreen());
+                    mc.gui.setScreen(new ProfilesScreen());
                 }
                 return true;
             }
@@ -190,7 +190,7 @@ public class ProfilesScreen extends DefaultBase {
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
             if (isHovered((int)mouseX, (int)mouseY)) {
-                mc.setScreenAndShow(new DownloadProfileScreen());
+                mc.gui.setScreen(new DownloadProfileScreen());
             }
             super.mouseClicked(mouseX, mouseY, button);
         }

@@ -97,7 +97,7 @@ public final class InteractionUtils implements Global {
     public static void toggleInventory(boolean toggle) {
         if (toggle) {
             if (mc.gui.screen() == null)
-                mc.execute(() -> mc.setScreenAndShow(new InventoryScreen(PlayerUtils.player())));
+                mc.execute(() -> mc.gui.setScreen(new InventoryScreen(PlayerUtils.player())));
         }
         else {
             if (mc.gui.screen() instanceof InventoryScreen inv)
@@ -125,7 +125,7 @@ public final class InteractionUtils implements Global {
             mc.execute(inv::onClose);
         }
         else {
-            mc.execute(() -> mc.setScreenAndShow(new InventoryScreen(PlayerUtils.player())));
+            mc.execute(() -> mc.gui.setScreen(new InventoryScreen(PlayerUtils.player())));
         }
     }
 
