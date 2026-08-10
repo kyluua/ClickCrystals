@@ -52,16 +52,6 @@ public class HomeScreen extends AnimatedBase {
         grid.addAllToPanel();
         this.addChild(grid.getPanel());
 
-        for (SuggestionElement suggestion : suggestions) {
-            suggestion.y -= 50;
-        }
-
-        system.scheduler.runRepeatingTask(() -> {
-            for (SuggestionElement suggestion : suggestions) {
-                suggestion.y++;
-            }
-        }, 0, 1, 50);
-
         // added last so it renders last and registers first
         this.addChild(searchResults);
         this.addChild(searchBar);
@@ -92,6 +82,9 @@ public class HomeScreen extends AnimatedBase {
 
         int caret = baseY + 70;
         int titleTrans = (int)(-50 * animator.getProgressClampedReversed());
+        for (SuggestionElement suggestion : suggestions) {
+            suggestion.y = baseY + baseHeight - 65 + titleTrans;
+        }
         RenderUtils.drawCenteredText(context, "§lClickCrystals §rv" + version, baseX + baseWidth / 2, caret - titleTrans, 2.0F, true);
         caret += 20;
         RenderUtils.drawCenteredText(context, "Crystal PvP Enhanced", baseX + baseWidth / 2, caret - titleTrans, 1.0F, true);

@@ -142,7 +142,7 @@ public class ScrollPanelElement extends GuiElement {
         if (bl)
             onRender(context, mouseX, mouseY);
         for (GuiElement child : this.getChildren())
-            if (child.y + child.height > this.y || child.y < this.y + this.height)
+            if (child.y + child.height > this.y && child.y < this.y + this.height)
                 child.render(context, mouseX, mouseY);
 
         context.pose().popMatrix();
